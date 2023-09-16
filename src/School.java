@@ -1,7 +1,6 @@
 import java.io.Serializable;
-import java.util.Date;
 
-public class SchoolData {
+public class School implements Serializable {
 
     private int id; // ID único para cada registro
     private String schoolName;
@@ -10,7 +9,7 @@ public class SchoolData {
     private String year;
 
 
-    public SchoolData(int id, String schoolName, String locality, String date, String year) {
+    public School(int id, String schoolName, String locality, String date, String year) {
         this.id = id;
         this.schoolName = schoolName;
         this.locality = locality;
@@ -40,6 +39,14 @@ public class SchoolData {
 
     public void setLocality(String locality) {
         this.locality = locality;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getYear() {
