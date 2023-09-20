@@ -3,7 +3,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class SchoolShooting implements Serializable {
 
@@ -76,89 +78,48 @@ public class SchoolShooting implements Serializable {
                 '}';
     }
 
-
-    public static SchoolShooting fromByteArray(byte[] byteArray) throws IOException, ClassNotFoundException {
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArray);
-        ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-        SchoolShooting schoolShooting = (SchoolShooting) objectInputStream.readObject();
-        objectInputStream.close();
-        return schoolShooting;
-    }
-
     /*
      * Funções conversoes
      */
-    public static long CalcularTamanhoArquivoCSV(String src) throws FileNotFoundException {
-        Path arq = Paths.get(src);
-        long i = 0;
+    public int CalcularTamanhoArquivo(String caminhoArquivo) throws ParseException {
+        File arquivo = new File(caminhoArquivo);
+        int i = 0;
+        if (arquivo.exists()) {
+            Scanner in;
 
-        try {
-            i = Files.lines(arq).count();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            try {
+                in = new Scanner(arquivo);
+                String s = in.nextLine();
+                while (in.hasNextLine()) {
+                    s = in.nextLine();
+                    i++;
+                }
+                in.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("erro ao abrir o arquivo");
         }
         return i;
     }
 
+    public void CriarArquivoDB(SchoolShooting[] schoolShootings, String dbFilePath) {
+        try (FileOutputStream fileOutputStream = new FileOutputStream(dbFilePath);
+             DataOutputStream dataOutputStream = new DataOutputStream(fileOutputStream)) {
 
-    /*
-     * Recebe uma lista do tipo SchoolShooting e armazena em um arquivo
-     */
-    public void ArmazenarEmArquivoDb(List<SchoolShooting> schoolShootingList, String dbFilePath) throws IOException {
-        RandomAccessFile arq = new RandomAccessFile(dbFilePath, "rw");
-        int j = 0;
-
-        for (SchoolShooting schoolShooting : schoolShootingList) {
-            // Verifica se o objeto existe dentro da lista passada como parâmetro
-            if (schoolShooting != null) {
-                // Se existe, serializa e salva no arquivo .db
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-
-                objectOutputStream.writeObject(schoolShooting);
-                objectOutputStream.close();
-
-                byte[] arrayBytes = byteArrayOutputStream.toByteArray();
-                arq.writeInt(arrayBytes.length);
-                arq.write(arrayBytes);
-                j++;
+            for (SchoolShooting shooting : schoolShootings) {
+                dataOutputStream.writeInt(shooting.getId());
+                dataOutputStream.writeUTF(shooting.getSchoolName());
+                dataOutputStream.writeUTF(shooting.getLocality());
+                dataOutputStream.writeUTF(shooting.getDate());
+                dataOutputStream.writeUTF(shooting.getYear());
             }
+
+            System.out.println("Arquivo .db criado com sucesso.");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        System.out.println("NUM REGISTROS ARMAZENADOS: " + j);
-        arq.close();
     }
-
-    // Exibe dados no db
-    public static void ExibirDadosDb(String dbFilePath, int num_reg) throws IOException, ParseException {
-        SchoolShooting schoolShooting = new SchoolShooting();
-        int tam;
-        byte[] arrayBytes;
-
-        RandomAccessFile arq = new RandomAccessFile(dbFilePath, "rw");
-        long filePointer = arq.readLong();
-
-        for (int i = 0; i < num_reg; i++) {
-            try {
-                filePointer = arq.getFilePointer();
-                tam = arq.readInt();
-                arrayBytes = new byte[tam];
-                arq.read(arrayBytes);
-                // Agora, você precisa desserializar o objeto
-                schoolShooting = SchoolShooting.fromByteArray(arrayBytes);
-                System.out.println(schoolShooting);
-
-            } catch (NullPointerException | ClassNotFoundException e) {
-                System.out.println("NullPointerException thrown!");
-            }
-        }
-
-        arq.seek(0);
-        arq.writeLong(filePointer);
-        arq.close();
-    }
-
-
-
 }
+

@@ -1,38 +1,39 @@
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.ParseException;
 
 public class    Main {
     private static final String CSV_FILE_PATH = "school-shootings-data.csv"; //Aponta para o caminho do csv
     private static final String DB_FILE_PATH = "school-data.db";
     public static String DB_TEMP = "temp.db";
-    public static int numero_linhas;
+    public static int tamArquivo;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ParseException {
         // Ler os dados do CSV
-        List<SchoolShooting> schoolShootingData = readCSV();
 
 
         SchoolShooting schoolShooting = new SchoolShooting();
-        schoolShooting.ArmazenarEmArquivoDb(schoolShootingData, DB_FILE_PATH);
+        tamArquivo = schoolShooting.CalcularTamanhoArquivo(CSV_FILE_PATH);
+        SchoolShooting[] schoolShootings = LerArquivoCSV(tamArquivo);
+        schoolShooting.CriarArquivoDB(schoolShootings, DB_FILE_PATH);
+
 
 
     }
 
-    private static List<SchoolShooting> readCSV() {
-        List<SchoolShooting> schoolShootingData = new ArrayList<>();
+    private static SchoolShooting[] LerArquivoCSV(int tamArquivo) {
+        SchoolShooting[] schoolShootingData = new SchoolShooting[tamArquivo];
+        int index = 0; // index do vetor
 
         try (Reader reader = new FileReader(CSV_FILE_PATH);
              CSVParser csvParser = new CSVParser(reader, CSVFormat.DEFAULT)) {
 
             for (CSVRecord csvRecord : csvParser) {
-                String idStr = csvRecord.get(0); // Obter a stringA do ID
+                String idStr = csvRecord.get(0); //pega o ID
 
-                // Tentar converter a string do ID em um número inteiro, para trabalhar com o ID
+                // Converte de string pra int o ID (precisa converter os outros para seus tipos correspodentes TODO sabrina)
                 int id;
                 try {
                     id = Integer.parseInt(idStr);
@@ -46,9 +47,17 @@ public class    Main {
                 String date = csvRecord.get(5);
                 String year = csvRecord.get(7);
 
-                // Criar um objeto com os dados lidos
+                // Criar um objeto com os dados lidos e adicioná-lo ao vetor
                 SchoolShooting newSchoolShooting = new SchoolShooting(id, schoolName, country, date, year);
-                schoolShootingData.add(newSchoolShooting);
+
+                // Verifica se da pra colcoar dentro do vetor
+                if (index < tamArquivo) {
+                    schoolShootingData[index] = newSchoolShooting;
+                    index++;
+                } else {
+                    System.err.println("O vetor está cheio. Não é possível adicionar mais elementos.");
+                    break; // Sair do loop
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -56,5 +65,6 @@ public class    Main {
 
         return schoolShootingData;
     }
+
 
 }
