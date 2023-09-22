@@ -33,7 +33,17 @@ public class SchoolShootingCSV {
                 String schoolName = csvRecord.get(2);
                 String country = csvRecord.get(46);
                 String date = csvRecord.get(5);
-                String year = csvRecord.get(7);
+
+                String yearStr = csvRecord.get(7);
+                // Converte de string pra int o ID (precisa converter os outros para seus tipos correspodentes TODO sabrina)
+                int year;
+                try {
+                    year = Integer.parseInt(yearStr);
+                } catch (NumberFormatException e) {
+                    System.err.println("Erro ao converter year: " + yearStr);
+                    continue;
+                }
+
 
                 // Criar um objeto com os dados lidos e adicioná-lo ao vetor
                 SchoolShooting newSchoolShooting = new SchoolShooting(id, schoolName, country, date, year);

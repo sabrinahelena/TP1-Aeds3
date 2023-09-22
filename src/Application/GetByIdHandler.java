@@ -17,7 +17,7 @@ public class GetByIdHandler {
                 String schoolName = dataInputStream.readUTF();
                 String country = dataInputStream.readUTF();
                 String date = dataInputStream.readUTF();
-                String year = dataInputStream.readUTF();
+                int year = dataInputStream.readInt();
 
                 if (idLido == id) {
                     return new SchoolShooting(id, schoolName, country, date, year);

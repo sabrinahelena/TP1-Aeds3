@@ -10,10 +10,10 @@ public class SchoolShooting implements Serializable {
     private String schoolName;
     private String locality;
     private String date;
-    private String year;
+    private int year;
 
 
-    public SchoolShooting(int id, String schoolName, String locality, String date, String year) {
+    public SchoolShooting(int id, String schoolName, String locality, String date, int year) {
         this.id = id;
         this.schoolName = schoolName;
         this.locality = locality;
@@ -56,11 +56,11 @@ public class SchoolShooting implements Serializable {
         this.date = date;
     }
 
-    public String getYear() {
+    public int getYear() {
         return year;
     }
 
-    public void setYear(String year) {
+    public void setYear(int year) {
         this.year = year;
     }
 

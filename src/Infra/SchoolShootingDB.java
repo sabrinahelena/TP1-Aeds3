@@ -16,7 +16,7 @@ public class SchoolShootingDB {
                 dataOutputStream.writeUTF(shooting.getSchoolName());
                 dataOutputStream.writeUTF(shooting.getLocality());
                 dataOutputStream.writeUTF(shooting.getDate());
-                dataOutputStream.writeUTF(shooting.getYear());
+                dataOutputStream.writeInt(shooting.getYear());
             }
 
             System.out.println("Arquivo .db criado com sucesso.");
