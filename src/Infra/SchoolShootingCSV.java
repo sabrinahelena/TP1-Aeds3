@@ -1,12 +1,13 @@
 package Infra;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import Domain.SchoolShooting;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import java.io.*;
-import java.text.ParseException;
 import java.util.Scanner;
 
 public class SchoolShootingCSV {
@@ -32,7 +33,17 @@ public class SchoolShootingCSV {
 
                 String schoolName = csvRecord.get(2);
                 String country = csvRecord.get(46);
-                String date = csvRecord.get(5);
+                String dateStr = csvRecord.get(5);
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+                Date date;
+                try {
+                    date = dateFormat.parse(dateStr);
+                } catch (ParseException e) {
+                    System.err.println("Erro ao converter data: " + dateStr);
+                    continue;
+                }
 
                 String yearStr = csvRecord.get(7);
                 // Converte de string pra int o ID (precisa converter os outros para seus tipos correspodentes TODO sabrina)
@@ -44,9 +55,10 @@ public class SchoolShootingCSV {
                     continue;
                 }
 
+                String weapon = csvRecord.get(38);
 
-                // Criar um objeto com os dados lidos e adicioná-lo ao vetor
-                SchoolShooting newSchoolShooting = new SchoolShooting(id, schoolName, country, date, year);
+                // Cria um objeto com os dados lidos
+                SchoolShooting newSchoolShooting = new SchoolShooting(id, schoolName, country, date, year, weapon);
 
                 // Verifica se da pra colcoar dentro do vetor
                 if (index < tamArquivo) {
@@ -54,7 +66,7 @@ public class SchoolShootingCSV {
                     index++;
                 } else {
                     System.err.println("O vetor está cheio. Não é possível adicionar mais elementos.");
-                    break; // Sair do loop
+                    break;
                 }
             }
         } catch (IOException e) {

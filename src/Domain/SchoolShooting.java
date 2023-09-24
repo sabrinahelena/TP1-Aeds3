@@ -2,6 +2,9 @@ package Domain;
 
 import java.io.*;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.Scanner;
 
 public class SchoolShooting implements Serializable {
@@ -9,20 +12,56 @@ public class SchoolShooting implements Serializable {
     private int id; // ID único para cada registro
     private String schoolName;
     private String locality;
-    private String date;
+    private Date date;
     private int year;
+    private String[] weapons;
+    private String weaponComplete;
 
 
-    public SchoolShooting(int id, String schoolName, String locality, String date, int year) {
+    /*
+    Construtor para CSV e DB
+     */
+
+    public SchoolShooting(int id, String schoolName, String locality, Date date, int year, String weaponComplete) {
         this.id = id;
         this.schoolName = schoolName;
         this.locality = locality;
         this.date = date;
         this.year = year;
+        this.weaponComplete = weaponComplete;
     }
 
-    public SchoolShooting() {
+    /*
+    Construtor para CRUD, com o vetor que armazena as armas separado usando split.
+     */
+
+    public SchoolShooting(int id, String schoolName, String locality, Date date, int year, String[] weapons) {
+        this.id = id;
+        this.schoolName = schoolName;
+        this.locality = locality;
+        this.date = date;
+        this.year = year;
+        this.weapons = weapons;
     }
+
+
+    public String getWeaponComplete() {
+        return weaponComplete;
+    }
+
+    public void setWeaponComplete(String weaponComplete) {
+        this.weaponComplete = weaponComplete;
+    }
+
+    public String[] getWeapons() {
+        return weapons;
+    }
+
+
+    public void setWeapons(String[] weapons) {
+        this.weapons = weapons;
+    }
+
 
     public int getId() {
         return id;
@@ -48,11 +87,11 @@ public class SchoolShooting implements Serializable {
         this.locality = locality;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -66,14 +105,29 @@ public class SchoolShooting implements Serializable {
 
     @Override
     public String toString() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        String formattedDate = dateFormat.format(date);
+
+        StringBuilder weaponsStr = new StringBuilder();
+        for (String weapon : weapons) {
+            weaponsStr.append(weapon).append(", ");
+        }
+
+        if (weaponsStr.length() > 0) {
+            weaponsStr.setLength(weaponsStr.length() - 2);  // isso e pra remover a última vírgula e espaço em branco
+
+        }
+
         return "Record{" +
                 "id=" + id +
                 ", schoolName='" + schoolName + '\'' +
                 ", locality='" + locality + '\'' +
                 ", year='" + year + '\'' +
-                ", date='" + date + '\'' +
+                ", date='" + formattedDate + '\'' +
+                ", weapons='" + weaponsStr.toString() + '\'' +
                 '}';
     }
+
 
 
 }
