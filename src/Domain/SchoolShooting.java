@@ -112,6 +112,7 @@ public class SchoolShooting implements Serializable {
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         String formattedDate = dateFormat.format(date);
 
+        /*
         StringBuilder weaponsStr = new StringBuilder();
         for (String weapon : weapons) {
             weaponsStr.append(weapon).append(", ");
@@ -130,7 +131,17 @@ public class SchoolShooting implements Serializable {
                 ", date='" + formattedDate + '\'' +
                 ", weapons='" + weaponsStr.toString() + '\'' +
                 '}';
+       */
+        return "Record{" +
+                "id=" + id +
+                ", schoolName='" + schoolName + '\'' +
+                ", locality='" + locality + '\'' +
+                ", year='" + year + '\'' +
+                ", date='" + formattedDate + '\'' +
+                ", weapons='" + weaponComplete + '\'' +
+                '}';
     }
+
 
 
 
