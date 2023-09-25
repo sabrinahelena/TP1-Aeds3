@@ -40,4 +40,5 @@ public class GetByIdHandler {
 
         return null; // Retorna null se o registro com o ID não for encontrado
     }
+
 }

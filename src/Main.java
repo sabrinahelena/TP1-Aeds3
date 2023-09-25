@@ -5,6 +5,7 @@ import Infra.SchoolShootingDB;
 
 import java.io.*;
 import java.text.ParseException;
+import Application.Menu;
 
 import static Application.GetByIdHandler.BuscarPorId;
 
@@ -24,16 +25,13 @@ public class Main {
          */
         SchoolShootingDB.CriarArquivoDB(schoolShootings, DB_FILE_PATH);
 
-        SchoolShooting shooting = GetByIdHandler.BuscarPorId(1, DB_FILE_PATH);
-        if (shooting != null) {
-            System.out.println("Registro encontrado: " + shooting.toString());
-        } else {
-            System.out.println("Registro não encontrado.");
-        }
 
-
+        Menu.CRUD(DB_FILE_PATH);
 
     }
+
+
+
 
 
 

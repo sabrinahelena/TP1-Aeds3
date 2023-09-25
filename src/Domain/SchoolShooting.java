@@ -103,6 +103,10 @@ public class SchoolShooting implements Serializable {
         this.year = year;
     }
 
+    public SchoolShooting() {
+
+    }
+
     @Override
     public String toString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
