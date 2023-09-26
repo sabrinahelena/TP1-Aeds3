@@ -46,7 +46,7 @@ public class CreateHandler {
         SchoolShooting schoolShooting = new SchoolShooting(ultId, schoolName, locality, date, year, weaponsStr);
 
         // Salve o objeto no arquivo .db
-        saveToDB(schoolShooting);
+        Infra.SchoolShootingDB.AdicionarRegistroAoArquivoDB(schoolShooting, DB_FILE_PATH);
 
         System.out.println("Registro criado com sucesso.");
     }

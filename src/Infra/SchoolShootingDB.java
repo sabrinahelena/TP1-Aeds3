@@ -30,4 +30,24 @@ public class SchoolShootingDB {
             e.printStackTrace();
         }
     }
+    public static void AdicionarRegistroAoArquivoDB(SchoolShooting newShooting, String dbFilePath) {
+        try (FileOutputStream fileOutputStream = new FileOutputStream(dbFilePath, true);
+             DataOutputStream dataOutputStream = new DataOutputStream(fileOutputStream)) {
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+            dataOutputStream.writeInt(newShooting.getId());
+            dataOutputStream.writeUTF(newShooting.getSchoolName());
+            dataOutputStream.writeUTF(newShooting.getLocality());
+            String dateStr = dateFormat.format(newShooting.getDate());
+            dataOutputStream.writeUTF(dateStr);
+            dataOutputStream.writeInt(newShooting.getYear());
+            dataOutputStream.writeUTF(newShooting.getWeaponComplete());
+
+            System.out.println("Registro adicionado ao arquivo .db com sucesso.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
