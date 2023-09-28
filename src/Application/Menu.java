@@ -58,12 +58,12 @@ public class Menu {
                 }
 
                 case 3: {
-                    /*
+
                     System.out.println("\t+++++++++ ATUALIZAR UM REGISTRO +++++++++\n");
                     System.out.println("ID: ");
-                    ID = eScanner.nextInt();
-                    update(ID, num_linhas);
-                    */
+                    int ID = eScanner.nextInt();
+                    UpdateHandler.AtualizarRegistro(ID, dbFilePath);
+
 
                     break;
                 }
