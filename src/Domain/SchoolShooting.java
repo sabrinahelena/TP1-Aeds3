@@ -54,7 +54,10 @@ public class SchoolShooting implements Serializable {
     }
 
     public String[] getWeapons() {
-        return weapons;
+        if(getWeaponComplete() == null){
+            return weapons;
+        }
+        return getWeaponComplete().split(",");
     }
 
 

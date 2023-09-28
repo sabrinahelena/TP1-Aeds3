@@ -4,6 +4,8 @@ import Domain.SchoolShooting;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 import Domain.SchoolShooting;
 import Application.CreateHandler;
@@ -35,7 +37,7 @@ public class Menu {
                     int id = eScanner.nextInt();
                     SchoolShooting shooting = GetByIdHandler.BuscarPorId(id, dbFilePath);
                     if (shooting != null) {
-                        System.out.println("Registro encontrado: " + shooting.toString());
+                        System.out.println("Registro encontrado: " + Imprimir(shooting.getDate(), shooting.getId(),shooting.getWeapons(), shooting.getYear(), shooting.getLocality(), shooting.getSchoolName() ));
                     } else {
                         System.out.println("Registro não encontrado.");
                     }
@@ -81,6 +83,32 @@ public class Menu {
                     break;
             }
         } while (ESCOLHA != 0);
+    }
+
+    public static String Imprimir(Date date, int id, String[] weapons, int year, String locality, String schoolName) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        String formattedDate = dateFormat.format(date);
+
+
+        StringBuilder weaponsStr = new StringBuilder();
+        for (String weapon : weapons) {
+            weaponsStr.append(weapon).append(", ");
+        }
+
+        if (weaponsStr.length() > 0) {
+            weaponsStr.setLength(weaponsStr.length() - 2);  // isso e pra remover a última vírgula e espaço em branco
+
+        }
+
+        return "Record{" +
+                "id=" + id +
+                ", schoolName='" + schoolName + '\'' +
+                ", locality='" + locality + '\'' +
+                ", year='" + year + '\'' +
+                ", date='" + formattedDate + '\'' +
+                ", weapons='" + weaponsStr.toString() + '\'' +
+                '}';
+
     }
 
 }

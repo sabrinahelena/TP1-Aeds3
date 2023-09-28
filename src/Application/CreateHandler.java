@@ -50,23 +50,6 @@ public class CreateHandler {
 
         System.out.println("Registro criado com sucesso.");
     }
-    public void saveToDB(SchoolShooting schoolShooting) {
-        try {
-            // Abra o arquivo .db para escrita em modo append
-            FileOutputStream fos = new FileOutputStream(DB_FILE_PATH, true);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-
-            // Escreva o objeto no arquivo
-            oos.writeObject(schoolShooting);
-
-            // Feche os fluxos
-            oos.close();
-            fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     public int PegarUltimoID(String dbFilePath) {
         int novoUltimoId = 0;

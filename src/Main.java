@@ -17,13 +17,13 @@ public class Main {
         /*
         Calcula o tamanho do arquivo para a instanciacao do vetor e depois faz a leitura do CSV.
          */
-        tamArquivo = SchoolShootingCSV.CalcularTamanhoArquivo(CSV_FILE_PATH);
-        SchoolShooting[] schoolShootings = SchoolShootingCSV.LerArquivoCSV(tamArquivo, CSV_FILE_PATH);
+        //tamArquivo = SchoolShootingCSV.CalcularTamanhoArquivo(CSV_FILE_PATH);
+        //SchoolShooting[] schoolShootings = SchoolShootingCSV.LerArquivoCSV(tamArquivo, CSV_FILE_PATH);
 
         /*
         Cria o arquivo .db
          */
-        SchoolShootingDB.CriarArquivoDB(schoolShootings, DB_FILE_PATH);
+        //SchoolShootingDB.CriarArquivoDB(schoolShootings, DB_FILE_PATH);
 
 
         Menu.CRUD(DB_FILE_PATH);
