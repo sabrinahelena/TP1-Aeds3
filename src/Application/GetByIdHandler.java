@@ -21,12 +21,13 @@ public class GetByIdHandler {
                 String dateStr = dataInputStream.readUTF();
                 int year = dataInputStream.readInt();
                 String[] weapons = dataInputStream.readUTF().split(",");
+                Boolean exists = dataInputStream.readBoolean();
 
                 if (idLido == id) {
                     Date date;
                     try {
                         date = dateFormat.parse(dateStr);
-                        return new SchoolShooting(id, schoolName, country, date, year, weapons);
+                        return new SchoolShooting(id, schoolName, country, date, year, weapons, exists);
                     } catch (java.text.ParseException e) {
                         e.printStackTrace();
                     }

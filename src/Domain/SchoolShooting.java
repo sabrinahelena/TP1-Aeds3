@@ -16,34 +16,44 @@ public class SchoolShooting implements Serializable {
     private int year;
     private String[] weapons;
     private String weaponComplete;
+    private Boolean exists;
 
 
     /*
     Construtor para CSV e DB
      */
 
-    public SchoolShooting(int id, String schoolName, String locality, Date date, int year, String weaponComplete) {
+    public SchoolShooting(int id, String schoolName, String locality, Date date, int year, String weaponComplete, Boolean exists) {
         this.id = id;
         this.schoolName = schoolName;
         this.locality = locality;
         this.date = date;
         this.year = year;
         this.weaponComplete = weaponComplete;
+        this.exists = exists;
     }
 
     /*
     Construtor para CRUD, com o vetor que armazena as armas separado usando split.
      */
 
-    public SchoolShooting(int id, String schoolName, String locality, Date date, int year, String[] weapons) {
+    public SchoolShooting(int id, String schoolName, String locality, Date date, int year, String[] weapons, Boolean exists) {
         this.id = id;
         this.schoolName = schoolName;
         this.locality = locality;
         this.date = date;
         this.year = year;
         this.weapons = weapons;
+        this.exists = exists;
     }
 
+    public Boolean getExists() {
+        return exists;
+    }
+
+    public void setExists(Boolean exists) {
+        this.exists = exists;
+    }
 
     public String getWeaponComplete() {
         return weaponComplete;
@@ -142,6 +152,7 @@ public class SchoolShooting implements Serializable {
                 ", year='" + year + '\'' +
                 ", date='" + formattedDate + '\'' +
                 ", weapons='" + weaponComplete + '\'' +
+                ", exists='" + exists + '\'' +
                 '}';
     }
 

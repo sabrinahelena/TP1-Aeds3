@@ -37,7 +37,7 @@ public class Menu {
                     int id = eScanner.nextInt();
                     SchoolShooting shooting = GetByIdHandler.BuscarPorId(id, dbFilePath);
                     if (shooting != null) {
-                        System.out.println("Registro encontrado: " + Imprimir(shooting.getDate(), shooting.getId(),shooting.getWeapons(), shooting.getYear(), shooting.getLocality(), shooting.getSchoolName() ));
+                        System.out.println("Registro encontrado: " + Imprimir(shooting.getDate(), shooting.getId(),shooting.getWeapons(), shooting.getYear(), shooting.getLocality(), shooting.getSchoolName(), shooting.getExists() ));
                     } else {
                         System.out.println("Registro não encontrado.");
                     }
@@ -70,6 +70,11 @@ public class Menu {
 
                 case 4: {
                     System.out.println("\t+++++++++ DELETAR UM REGISTRO +++++++++\n");
+                    System.out.println("ID: ");
+                    int ID = eScanner.nextInt();
+                    DeleteHandler.DeletarRegistro(ID, dbFilePath);
+
+
                     break;
                 }
 
@@ -85,7 +90,7 @@ public class Menu {
         } while (ESCOLHA != 0);
     }
 
-    public static String Imprimir(Date date, int id, String[] weapons, int year, String locality, String schoolName) {
+    public static String Imprimir(Date date, int id, String[] weapons, int year, String locality, String schoolName, Boolean exists) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         String formattedDate = dateFormat.format(date);
 
@@ -107,6 +112,8 @@ public class Menu {
                 ", year='" + year + '\'' +
                 ", date='" + formattedDate + '\'' +
                 ", weapons='" + weaponsStr.toString() + '\'' +
+                ", exists='" + exists + '\'' +
+
                 '}';
 
     }

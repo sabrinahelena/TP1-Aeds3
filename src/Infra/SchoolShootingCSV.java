@@ -58,7 +58,7 @@ public class SchoolShootingCSV {
                 String weapon = csvRecord.get(38);
 
                 // Cria um objeto com os dados lidos
-                SchoolShooting newSchoolShooting = new SchoolShooting(id, schoolName, country, date, year, weapon);
+                SchoolShooting newSchoolShooting = new SchoolShooting(id, schoolName, country, date, year, weapon, true);
 
                 // Verifica se da pra colcoar dentro do vetor
                 if (index < tamArquivo) {

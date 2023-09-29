@@ -24,6 +24,7 @@ public class SchoolShootingDB {
                 dataOutputStream.writeUTF(dateStr);
                 dataOutputStream.writeInt(shooting.getYear());
                 dataOutputStream.writeUTF(shooting.getWeaponComplete());
+                dataOutputStream.writeBoolean(shooting.getExists());
             }
 
             System.out.println("Arquivo .db criado com sucesso.");
@@ -44,6 +45,7 @@ public class SchoolShootingDB {
             dataOutputStream.writeUTF(dateStr);
             dataOutputStream.writeInt(newShooting.getYear());
             dataOutputStream.writeUTF(newShooting.getWeaponComplete());
+            dataOutputStream.writeBoolean(newShooting.getExists());
 
             System.out.println("Registro adicionado ao arquivo .db com sucesso.");
         } catch (IOException e) {
@@ -66,8 +68,9 @@ public class SchoolShootingDB {
                 String dateStr = dataInputStream.readUTF();
                 int year = dataInputStream.readInt();
                 String weaponComplete = dataInputStream.readUTF();
+                Boolean exists = dataInputStream.readBoolean();
 
-                SchoolShooting shooting = new SchoolShooting(currentId, schoolName, locality, dateFormat.parse(dateStr), year, weaponComplete);
+                SchoolShooting shooting = new SchoolShooting(currentId, schoolName, locality, dateFormat.parse(dateStr), year, weaponComplete, exists);
                 shootings.add(shooting);
             }
 
@@ -98,6 +101,7 @@ public class SchoolShootingDB {
                     dataOutputStream.writeUTF(dateStr);
                     dataOutputStream.writeInt(shooting.getYear());
                     dataOutputStream.writeUTF(shooting.getWeaponComplete());
+                    dataOutputStream.writeBoolean(shooting.getExists());
                 }
 
                 System.out.println("Registro com ID " + id + " atualizado no arquivo .db com sucesso.");
@@ -109,6 +113,69 @@ public class SchoolShootingDB {
             e.printStackTrace();
         }
     }
+
+
+    public static void DeletarRegistroNoArquivoDB(SchoolShooting excludeShooting, String dbFilePath, int id) {
+        try (FileInputStream fileInputStream = new FileInputStream(dbFilePath);
+             DataInputStream dataInputStream = new DataInputStream(fileInputStream)) {
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+            List<SchoolShooting> shootings = new ArrayList<>();
+
+            while (dataInputStream.available() > 0) {
+                int currentId = dataInputStream.readInt();
+                String schoolName = dataInputStream.readUTF();
+                String locality = dataInputStream.readUTF();
+                String dateStr = dataInputStream.readUTF();
+                int year = dataInputStream.readInt();
+                String weaponComplete = dataInputStream.readUTF();
+                Boolean exists = dataInputStream.readBoolean();
+
+                SchoolShooting shooting = new SchoolShooting(currentId, schoolName, locality, dateFormat.parse(dateStr), year, weaponComplete, exists);
+                shootings.add(shooting);
+            }
+
+            // Encontrar e atualizar o registro com o ID especificado
+            boolean updated = false;
+            for (int i = 0; i < shootings.size(); i++) {
+                if (shootings.get(i).getId() == id) {
+                    shootings.get(i).setExists(excludeShooting.getExists()); // Atualize a coluna "exists"
+                    updated = true;
+                    break;
+                }
+            }
+
+            if (!updated) {
+                System.out.println("Registro com ID " + id + " não encontrado.");
+                return;
+            }
+
+            // Escrever todos os registros atualizados de volta no arquivo .db
+            try (FileOutputStream fileOutputStream = new FileOutputStream(dbFilePath);
+                 DataOutputStream dataOutputStream = new DataOutputStream(fileOutputStream)) {
+
+                for (SchoolShooting shooting : shootings) {
+                    dataOutputStream.writeInt(shooting.getId());
+                    dataOutputStream.writeUTF(shooting.getSchoolName());
+                    dataOutputStream.writeUTF(shooting.getLocality());
+                    String dateStr = dateFormat.format(shooting.getDate());
+                    dataOutputStream.writeUTF(dateStr);
+                    dataOutputStream.writeInt(shooting.getYear());
+                    dataOutputStream.writeUTF(shooting.getWeaponComplete());
+                    dataOutputStream.writeBoolean(shooting.getExists());
+                }
+
+                System.out.println("Registro com ID " + id + " atualizado no arquivo .db com sucesso para delete.");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        } catch (IOException | java.text.ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 }

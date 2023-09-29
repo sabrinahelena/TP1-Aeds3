@@ -43,7 +43,7 @@ public class CreateHandler {
 
         // Crie um objeto SchoolShooting com os dados fornecidos e o novo ID
         String[] weapons = weaponsStr.split(", ");
-        SchoolShooting schoolShooting = new SchoolShooting(ultId, schoolName, locality, date, year, weaponsStr);
+        SchoolShooting schoolShooting = new SchoolShooting(ultId, schoolName, locality, date, year, weaponsStr, true);
 
         // Salve o objeto no arquivo .db
         Infra.SchoolShootingDB.AdicionarRegistroAoArquivoDB(schoolShooting, DB_FILE_PATH);
@@ -67,6 +67,7 @@ public class CreateHandler {
                     novoUltimoId = idLido + 1;
                     setUltimoId(novoUltimoId);
                 }
+                Boolean exists = dataInputStream.readBoolean();
             }
         } catch (IOException e) {
             e.printStackTrace();

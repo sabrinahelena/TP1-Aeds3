@@ -29,7 +29,7 @@ public class UpdateHandler {
 
         // Crie um objeto SchoolShooting com os dados fornecidos e o novo ID
         String[] weapons = weaponsStr.split(", ");
-        SchoolShooting newSchoolShooting = new SchoolShooting(id, schoolName, locality, date, year, weaponsStr);
+        SchoolShooting newSchoolShooting = new SchoolShooting(id, schoolName, locality, date, year, weaponsStr, true);
 
 
         assert schoolShooting != null;
