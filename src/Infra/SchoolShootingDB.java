@@ -13,9 +13,11 @@ public class SchoolShootingDB {
         try (FileOutputStream fileOutputStream = new FileOutputStream(dbFilePath);
              DataOutputStream dataOutputStream = new DataOutputStream(fileOutputStream)) {
 
+            //parse de data
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
 
+            //Para cada objeto dentro do vetor de objetos, escreve os dados
             for (SchoolShooting shooting : schoolShootings) {
                 dataOutputStream.writeInt(shooting.getId());
                 dataOutputStream.writeUTF(shooting.getSchoolName());
@@ -32,6 +34,11 @@ public class SchoolShootingDB {
             e.printStackTrace();
         }
     }
+
+    /*
+    Aqui é praticamente a mesma coisa do de cima, mas ao invés de criar vários ao mesmo tempo por conta de passar um
+    vetor como parâmetro, aqui passa um objeto só.
+     */
     public static void AdicionarRegistroAoArquivoDB(SchoolShooting newShooting, String dbFilePath) {
         try (FileOutputStream fileOutputStream = new FileOutputStream(dbFilePath, true);
              DataOutputStream dataOutputStream = new DataOutputStream(fileOutputStream)) {
@@ -53,6 +60,10 @@ public class SchoolShootingDB {
         }
     }
 
+
+    /*
+    Recebe o shooting para atualizar
+     */
     public static void AtualizarRegistroNoArquivoDB(SchoolShooting updatedShooting, String dbFilePath, int id) {
         try (FileInputStream fileInputStream = new FileInputStream(dbFilePath);
              DataInputStream dataInputStream = new DataInputStream(fileInputStream)) {
@@ -74,7 +85,7 @@ public class SchoolShootingDB {
                 shootings.add(shooting);
             }
 
-            // Encontrar e atualizar o registro com o ID especificado
+            // Encontra e atualiza o registro com o ID especificado
             boolean updated = false;
             for (int i = 0; i < shootings.size(); i++) {
                 if (shootings.get(i).getId() == id) {
@@ -115,6 +126,9 @@ public class SchoolShootingDB {
     }
 
 
+    /*
+    Funciona igual o update, mas só seta informação na coluna de exists.
+     */
     public static void DeletarRegistroNoArquivoDB(SchoolShooting excludeShooting, String dbFilePath, int id) {
         try (FileInputStream fileInputStream = new FileInputStream(dbFilePath);
              DataInputStream dataInputStream = new DataInputStream(fileInputStream)) {
@@ -137,16 +151,16 @@ public class SchoolShootingDB {
             }
 
             // Encontrar e atualizar o registro com o ID especificado
-            boolean updated = false;
+            boolean deleted = false;
             for (int i = 0; i < shootings.size(); i++) {
                 if (shootings.get(i).getId() == id) {
                     shootings.get(i).setExists(excludeShooting.getExists()); // Atualize a coluna "exists"
-                    updated = true;
+                    deleted = true;
                     break;
                 }
             }
 
-            if (!updated) {
+            if (!deleted) {
                 System.out.println("Registro com ID " + id + " não encontrado.");
                 return;
             }
@@ -155,6 +169,9 @@ public class SchoolShootingDB {
             try (FileOutputStream fileOutputStream = new FileOutputStream(dbFilePath);
                  DataOutputStream dataOutputStream = new DataOutputStream(fileOutputStream)) {
 
+                /*
+                Aqui escreve as meeesmas informações que já estavam mesmo, só atualizando a coluna exists
+                 */
                 for (SchoolShooting shooting : shootings) {
                     dataOutputStream.writeInt(shooting.getId());
                     dataOutputStream.writeUTF(shooting.getSchoolName());

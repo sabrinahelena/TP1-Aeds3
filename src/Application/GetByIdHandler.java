@@ -12,8 +12,12 @@ public class GetByIdHandler {
     public static SchoolShooting BuscarPorId(int id, String dbFilePath) {
         try (FileInputStream fileInputStream = new FileInputStream(dbFilePath);
              DataInputStream dataInputStream = new DataInputStream(fileInputStream)) {
+            //Parse de data
             SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
+            /*
+            Aqui lê os dados dos arquivos
+             */
             while (dataInputStream.available() > 0) {
                 int idLido = dataInputStream.readInt();
                 String schoolName = dataInputStream.readUTF();
@@ -23,6 +27,9 @@ public class GetByIdHandler {
                 String[] weapons = dataInputStream.readUTF().split(",");
                 Boolean exists = dataInputStream.readBoolean();
 
+                /*
+                Se o id lido, for igual ao id passado pelo usuário, retornamos o objeto.
+                 */
                 if (idLido == id) {
                     Date date;
                     try {

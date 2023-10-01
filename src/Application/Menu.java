@@ -19,20 +19,23 @@ public class Menu {
         int ESCOLHA = 0;
 
 
+        /*
+        Executa um menu de opções em loop até a pessoa selecionar 0 para parar o loop.
+         */
         do {
-            System.out.println("\n+++++++++ CRUD +++++++++\n");
-            System.out.println("    OPÇÕES: " +
-                    "\n\t1    -   LER UM REGISTRO POR ID" +
-                    "\n\t2    -   ADICIONAR UM REGISTRO" +
-                    "\n\t3    -   ATUALIZAR UM REGISTRO" +
-                    "\n\t4    -   DELETAR UM REGISTRO" +
-                    "\n\t0    -   SAIR\n");
+            System.out.println("\nMenu de operações\n");
+            System.out.println("OPÇÕES: " +
+                    "\n\t1 - LER UM REGISTRO POR ID" +
+                    "\n\t2 - ADICIONAR UM REGISTRO" +
+                    "\n\t3 - ATUALIZAR UM REGISTRO" +
+                    "\n\t4 - DELETAR UM REGISTRO" +
+                    "\n\t0 - SAIR\n");
 
             ESCOLHA = eScanner.nextInt();
 
             switch (ESCOLHA) {
                 case 1: {
-                    System.out.println("\t+++++++++ LER UM REGISTRO POR ID +++++++++\n");
+                    System.out.println("\t Vamos ler um registro pelo Id! \n");
                     System.out.print("\t\nDigite um ID: ");
                     int id = eScanner.nextInt();
                     SchoolShooting shooting = GetByIdHandler.BuscarPorId(id, dbFilePath);
@@ -48,7 +51,7 @@ public class Menu {
 
 
                 case 2: {
-                    System.out.println("\t+++++++++ ADICIONAR UM REGISTRO +++++++++\n");
+                    System.out.println("\t Vamos adicionar um registro! \n");
 
                     // Chame o método main da classe Create para adicionar um registro
                     CreateHandler createHandler = new CreateHandler();
@@ -59,7 +62,7 @@ public class Menu {
 
                 case 3: {
 
-                    System.out.println("\t+++++++++ ATUALIZAR UM REGISTRO +++++++++\n");
+                    System.out.println("\t Vamos atualizar um registro! \n");
                     System.out.println("ID: ");
                     int ID = eScanner.nextInt();
                     UpdateHandler.AtualizarRegistro(ID, dbFilePath);
@@ -69,7 +72,7 @@ public class Menu {
                 }
 
                 case 4: {
-                    System.out.println("\t+++++++++ DELETAR UM REGISTRO +++++++++\n");
+                    System.out.println("\t Vamos deletar um registro! \n");
                     System.out.println("ID: ");
                     int ID = eScanner.nextInt();
                     DeleteHandler.DeletarRegistro(ID, dbFilePath);
@@ -79,12 +82,12 @@ public class Menu {
                 }
 
                 case 0: {
-                    System.out.println("\n+++++++++ ADEUS! +++++++++");
+                    System.out.println("\nObrigada! Até a próxima.");
                     break;
                 }
 
                 default:
-                    System.out.println("\n+++++++++ OPÇÃO INVÁLIDA +++++++++\n");
+                    System.out.println("\nOpção inválida.\n");
                     break;
             }
         } while (ESCOLHA != 0);

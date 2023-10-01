@@ -26,6 +26,7 @@ public class Main {
         //SchoolShootingDB.CriarArquivoDB(schoolShootings, DB_FILE_PATH);
 
 
+        //Chama o menu de CRUD
         Menu.CRUD(DB_FILE_PATH);
 
     }

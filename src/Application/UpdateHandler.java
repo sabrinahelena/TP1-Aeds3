@@ -27,11 +27,14 @@ public class UpdateHandler {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Date date = dateFormat.parse(dateStr);
 
-        // Crie um objeto SchoolShooting com os dados fornecidos e o novo ID
+        // Cria um objeto SchoolShooting com os dados fornecidos e o novo ID
         String[] weapons = weaponsStr.split(", ");
         SchoolShooting newSchoolShooting = new SchoolShooting(id, schoolName, locality, date, year, weaponsStr, true);
 
 
+        /*
+        Pega todas as informações do novo school shooting e passa para o "antigo"
+         */
         assert schoolShooting != null;
         newSchoolShooting.setId(id);
         schoolShooting.setDate(newSchoolShooting.getDate());
@@ -40,6 +43,7 @@ public class UpdateHandler {
         schoolShooting.setLocality(newSchoolShooting.getLocality());
         schoolShooting.setYear(newSchoolShooting.getYear());
 
+        //Chama a função para atualizar o registro
         Infra.SchoolShootingDB.AtualizarRegistroNoArquivoDB(newSchoolShooting, dbFilePath, id);
 
         System.out.println("Registro atualizado com sucesso.");
