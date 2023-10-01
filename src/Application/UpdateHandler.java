@@ -28,7 +28,7 @@ public class UpdateHandler {
         Date date = dateFormat.parse(dateStr);
 
         // Cria um objeto SchoolShooting com os dados fornecidos e o novo ID
-        String[] weapons = weaponsStr.split(", ");
+
         SchoolShooting newSchoolShooting = new SchoolShooting(id, schoolName, locality, date, year, weaponsStr, true);
 
 

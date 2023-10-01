@@ -11,10 +11,6 @@ import java.util.Scanner;
 public class CreateHandler {
     public int ultimoId = 391;
 
-    public int getUltimoId() {
-        return ultimoId;
-    }
-
     public void setUltimoId(int ultimoId) {
         this.ultimoId = ultimoId;
     }
@@ -48,7 +44,7 @@ public class CreateHandler {
         // Salve o objeto no arquivo .db
         Infra.SchoolShootingDB.AdicionarRegistroAoArquivoDB(schoolShooting, DB_FILE_PATH);
 
-        System.out.println("Registro criado com sucesso.");
+        System.out.println("Registro criado com sucesso. ID: " + ultId);
     }
 
     public int PegarUltimoID(String dbFilePath) {
