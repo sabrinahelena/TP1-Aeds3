@@ -116,35 +116,12 @@ public class SchoolShooting implements Serializable {
         this.year = year;
     }
 
-    public SchoolShooting() {
-
-    }
 
     @Override
     public String toString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         String formattedDate = dateFormat.format(date);
 
-        /*
-        StringBuilder weaponsStr = new StringBuilder();
-        for (String weapon : weapons) {
-            weaponsStr.append(weapon).append(", ");
-        }
-
-        if (weaponsStr.length() > 0) {
-            weaponsStr.setLength(weaponsStr.length() - 2);  // isso e pra remover a última vírgula e espaço em branco
-
-        }
-
-        return "Record{" +
-                "id=" + id +
-                ", schoolName='" + schoolName + '\'' +
-                ", locality='" + locality + '\'' +
-                ", year='" + year + '\'' +
-                ", date='" + formattedDate + '\'' +
-                ", weapons='" + weaponsStr.toString() + '\'' +
-                '}';
-       */
         return "Record{" +
                 "id=" + id +
                 ", schoolName='" + schoolName + '\'' +
